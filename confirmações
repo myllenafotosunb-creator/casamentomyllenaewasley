@@ -116,7 +116,7 @@ p {
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyYc-jZ01RtN9H58heaoKF0h6LvdaD_KGoaCGvP_VDgk20aPEZYi0_EzPPCE4g-W3M3mw/exec";
 
 
-    // Simulação de convidados cadastrados
+    // Convidados cadastrados
     const families = {
       "Myllena|61993133348": ["Mel", "Pandora", "Alaska"],
       "Mirella|61991388359": ["Bianca", "Isabela", "Tilinha"]
