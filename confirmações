@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirmação de Presença</title>
+
+  <!-- Fonte Google Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+      background: #f8f8f8;
+      font-size: 18px;
+    }
+
+h1, h2 {
+  font-weight: 700; /* mais negrito */
+}
+p {
+  font-weight: 400; /* normal para parágrafos */
+}
+
+
+  h1 { color: #8a2be2; }
+
+  .form-box, .family-box {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 95%; /* ocupa quase toda a tela no celular */
+    margin: 20px auto;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+
+  .guest {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+  }
+
+  input[type="text"] {
+    width: 90%; /* campos maiores no celular */
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  button {
+    padding: 10px 20px; /* botões maiores */
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .yes { background: #4caf50; color: white; }
+  .no { background: #f44336; color: white; }
+  .confirm { background: #8a2be2; color: white; margin-top: 15px; }
+
+.intro-box {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 95%;
+  margin: 0 auto 20px auto;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  font-size: 18px;
+}
+.intro-box h2 {
+  color: #8a2be2;
+}
+
+.heart.orange { color: yellow; }
+
+.greeting { 
+  color: orange; 
+}
+
+
+</style>
+
+</head>
+<body>
+ <div class="intro-box">
+  <h2><span class="greeting">"Até aqui o Senhor nos sustentou" 1Sm 7,12</span> 
+    <span class="heart orange">💛🧡</span>
+   
+     </h2>
+  <p>Estamos muito felizes em convidar você para nosso casamento!</p>
+  <p><strong>Myllena & Wasley</strong></p>
+  <p>Por favor, confirme sua presença abaixo:</p>
+</div>
+
+
+
+  
+  <div class="form-box" id="loginBox">
+    <p>Digite seu primeiro nome e telefone com DDD+9 para confirmar sua presença.</p>
+    <input type="text" id="name" placeholder="Primeiro nome"><br><br>
+    <input type="text" id="phone" placeholder="Telefone. Ex: 61998765432 "><br><br>
+    <button onclick="login()">Entrar</button>
+  </div>
+
+  <div class="family-box" id="familyBox" style="display:none;">
+    <h2>Confirme os convidados:</h2>
+    <div id="guestList"></div>
+    <button class="confirm" onclick="submitConfirmation()">Confirmar Presença</button>
+  </div>
+
+  <script>
+    // Substitua pela URL do seu Apps Script
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyYc-jZ01RtN9H58heaoKF0h6LvdaD_KGoaCGvP_VDgk20aPEZYi0_EzPPCE4g-W3M3mw/exec";
+
+
+    // Simulação de convidados cadastrados
+    const families = {
+      "Myllena|61993133348": ["Mel", "Pandora", "Alaska"],
+      "Ana Souza|61988888888": ["Ana Souza", "Carlos Souza"]
+    };
+
+    let selectedGuests = {};
+    let currentRep = "";
+    let currentPhone = "";
+
+    function login() {
+      const name = document.getElementById("name").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const key = `${name}|${phone}`;
+      
+      if (families[key]) {
+        currentRep = name;
+        currentPhone = phone;
+        document.getElementById("loginBox").style.display = "none";
+        document.getElementById("familyBox").style.display = "block";
+        loadGuests(families[key]);
+      } else {
+        alert("Nome ou telefone não encontrados. Tente novamente.");
+      }
+    }
+
+    function loadGuests(guests) {
+      const guestListDiv = document.getElementById("guestList");
+      guestListDiv.innerHTML = "";
+      guests.forEach(guest => {
+        selectedGuests[guest] = null;
+        const div = document.createElement("div");
+        div.classList.add("guest");
+        div.innerHTML = `
+          <span>${guest}</span>
+          <div>
+            <button class="yes" onclick="setResponse('${guest}', true)">Sim</button>
+            <button class="no" onclick="setResponse('${guest}', false)">Não</button>
+          </div>
+        `;
+        guestListDiv.appendChild(div);
+      });
+    }
+
+    function setResponse(guest, response) {
+  selectedGuests[guest] = response;
+
+  // Seleciona os botões do convidado
+  const guestDivs = document.querySelectorAll(".guest");
+  guestDivs.forEach(div => {
+    if(div.querySelector("span").textContent === guest){
+      const buttons = div.querySelectorAll("button");
+      buttons.forEach(btn => btn.style.opacity = "0.5"); // deixa todos meio apagados
+      if(response){ 
+        buttons[0].style.opacity = "1"; // botão "Sim" destacado
+      } else { 
+        buttons[1].style.opacity = "1"; // botão "Não" destacado
+      }
+    }
+  });
+}
+
+
+   function submitConfirmation() {
+  const confirmBtn = document.querySelector(".confirm");
+  confirmBtn.disabled = true;          // desativa o botão para evitar múltiplos cliques
+  confirmBtn.style.opacity = "0.5";    // deixa visualmente “clicado”
+
+  fetch(SCRIPT_URL, {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      representante: currentRep,
+      telefone: currentPhone,
+      respostas: selectedGuests
+    })
+  }).then(() => {
+    confirmBtn.textContent = "Confirmado! 💛"; // muda o texto
+    alert("Presença confirmada com sucesso! Obrigado 🧡");
+  }).catch(err => {
+    confirmBtn.disabled = false;
+    confirmBtn.style.opacity = "1";
+    alert("Erro ao enviar confirmação.");
+    console.error(err);
+  });
+}
+
+  </script>
+</body>
+</html>
