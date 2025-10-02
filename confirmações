@@ -119,7 +119,7 @@ p {
     // Simulação de convidados cadastrados
     const families = {
       "Myllena|61993133348": ["Mel", "Pandora", "Alaska"],
-      "Ana Souza|61988888888": ["Ana Souza", "Carlos Souza"]
+      "Mirella|61991388359": ["Bianca", "Isabela", "Tilinha"]
     };
 
     let selectedGuests = {};
