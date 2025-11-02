@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirmação de Presença</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+      background: #f8f8f8;
+      font-size: 18px;
+    }
+
+    h1, h2 {
+      font-weight: 700;
+    }
+    p {
+      font-weight: 400;
+    }
+
+    h1 { color: #8a2be2; }
+
+    .form-box, .family-box {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 95%;
+      margin: 20px auto;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .guest {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 0;
+    }
+
+    input[type="text"] {
+      width: 90%;
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .yes { background: #4caf50; color: white; }
+    .no { background: #f44336; color: white; }
+    .confirm { background: #8a2be2; color: white; margin-top: 15px; }
+
+    .intro-box {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 95%;
+      margin: 0 auto 20px auto;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      font-size: 18px;
+    }
+    .intro-box h2 {
+      color: #8a2be2;
+    }
+
+    .heart.orange { color: yellow; }
+    .greeting { color: orange; }
+
+    .disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <div class="intro-box">
+    <h2><span class="greeting">"Até aqui o Senhor nos sustentou" 1Sm 7,12</span> 💛</h2>
+    <p>Estamos muito felizes em convidar você para nosso casamento!</p>
+    <p><strong>Myllena 🧡 Wasley</strong></p>
+    <p>Por favor, confirme sua presença abaixo:</p>
+  </div>
+
+  <div class="form-box" id="loginBox">
+    <p>Digite seu primeiro nome e telefone com DDD+9 para confirmar sua presença.</p>
+    <input type="text" id="name" placeholder="Primeiro nome"><br><br>
+    <input type="text" id="phone" placeholder="Telefone, apenas números. Ex: 61998765432"><br><br>
+    <button onclick="login()">Entrar</button>
+  </div>
+
+  <div class="family-box" id="familyBox" style="display:none;">
+    <h2>Confirme os convidados:</h2>
+    <div id="guestList"></div>
+    <button class="confirm" onclick="submitConfirmation()">Confirmar Presença</button>
+    <p id="statusMessage" style="margin-top:10px; color:#555;"></p>
+  </div>
+
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyYc-jZ01RtN9H58heaoKF0h6LvdaD_KGoaCGvP_VDgk20aPEZYi0_EzPPCE4g-W3M3mw/exec";
+
+    const families = {
+      "Eleni|89994310040": ["Eleni"],
+      "Mirella|61991388359": ["Mirella", "Robson"],
+      "Teresa Letícia|89994159455": ["Teresa Letícia", "Esther", "Théo"],
+      "Evanilda|89994122163": ["Evanilda", "Ana Vitória", "Resigeldo"],
+      "Eva|61993025884": ["Eva", "Sérgio", "Maria Luísa"],
+      "Gustavo|61993185918": ["Gustavo", "Fernanda"],
+      "Elinalda|61991430461": ["Elinalda", "Gilton", "Arthur", "Gabrielly"],
+      "Bruno|61992171171": ["Bruno", "Jennifer"],
+      "Edna|61996015179": ["Edna", "Rubson"],
+      "Gabrielle|61998794362": ["Gabrielle", "Bárbara"],
+      "Glauber|61996341079": ["Daiane", "Glauber", "Enzo", "Erick", "Emilly", "Elloah", "Ellyse"],
+      "Ednalva|61992902283": ["Ednalva", "Edson"],
+      "Vitória|61995942454": ["Vitória", "Eduardo"],
+      "Romildo|61999216567": ["Romildo", "Inalda"],
+      "Angela|61993241730": ["Angela", "Evandro"],
+      "Ana|61991859715": ["Ana Maria"],
+      "Reinaldo|61994308682": ["Reinaldo"],
+      "Helen|61992330352": ["Helen", "Deyvyd"],
+      "Ramon|61996768503": ["Ramon", "Karol", "Juliana", "Tereza", "Creidival"],
+      "Lucas|61982139004": ["Lucas", "Kelly"],
+      "Valério|61992007754": ["Valério", "Bete", "Matheus", "Thomaz", "Kauã"],
+      "Helena|61991919389": ["Helena", "Valdemir"],
+      "Samara|61996895534": ["Samara", "Jorge"],
+      "Maria|61992860834": ["Fátima", "Raimundo", "Francisca", "Maria", "Stella"],
+      "Ivânia|61998028741": ["Ivânia", "Cleidio", "Théo"],
+      "Luciane|61998318576": ["Luciane", "Marcos", "Laura"],
+      "Maria|61996034586": ["Rozinalda", "Assis", "Raimunda"],
+      "Elizângela|61998432488": ["Elizângela", "Ageu"],
+      "Maria|61996191666": ["Maria Júlia", "Raimundo"],
+      "Joyce|61985390260": ["Joyce", "Thiago"],
+      "Hiaanca|61993829475": ["Hiaanca", "Joseph"],
+      "Sérgio|61991397518": ["Sérgio", "Bárbara"],
+      "Juliana|61996211428": ["Juliana", "Ravi"],
+      "Sâmya|61981983041": ["Sâmya", "João"],
+      "Elaine|61983539680": ["Elaine", "Anaís"],
+      "Fábio|61991506979": ["Fábio", "Fran"],
+      "Caio|61998712785": ["Caio", "Raissa"],
+      "Lucinete|61998692426": ["Lucinete"],
+      "Valquíria|61981159890": ["Valquíria", "Carlos", "Márcia"],
+      "Marlene|61999949908": ["Marlene", "Gael"],
+      "Maria|61983362357": ["Maria Heloísa", "Gabriel"],
+      "Thiago|61991364165": ["Thiago"],
+      "Bruna|61991227325": ["Bruna", "Emanuelly"],
+      "Ednalda|61999759771": ["Ednalda", "Mauro", "Bianca", "Isabela"],
+      "Marinalda|61993794957": ["Marinalda", "Agnaldo"],
+      "Werner|61992564660": ["Werner", "Francisca", "João Gabriel", "Maria Sophia", "Delmira"],
+      "Andressa|61992170404": ["Andressa", "Peterson"],
+      "Maria|61991676159": ["Rita", "Marido"],
+      "Will|61985942024": ["Will", "Marina"],
+      "Gidelma|61991417788": ["Gidelma", "Lara", "Maria Luiza"],
+      "Welleson|61982729104": ["Welleson", "Kallyne", "Eloah"],
+      "Antônia|83996378210": ["Antônio", "Simone", "Maria das Dores", "José Odair", "Nivaldo"],
+      "Argemilha|61991518062": ["Argemilha", "Ronaldo", "Laís", "Pedro"],
+      "Evelyn|61985410134": ["Evelyn", "Kelvin"],
+      "Wesley|6198792488": ["Wesley"],
+      "Augeliane|61992306171": ["Augeliane", "Silva Filho", "Deiseane", "João, "Derik"],
+      "Argemiro|61982657020": ["Argemiro", "Socorro", "Célio", "Eduarda", "Jaqueline", "Sofia", "Jamiliane", "Walisson"],
+      "Marileide|84996416808": ["Marileide", "Esther"],
+      "Maria|61998762262": ["Maria do Socorro", "Marcos", "Carlos Eduardo", "Heloísa"],
+      "Fagna|61981519070": ["Fagna", "Lara", "Cida", "Matheus"],
+      "Leudo|61995975451": ["Leudo", "Geralda", "Raissa", "Thaynara"],
+      "Marcelo|61995554442": ["Marcelo"]
+      "Izabel|61996899627": ["Izabel", "Fábio"]
+      "Harry|61981918276": ["Harry", "Rejane"]
+      "Douglas|61982254299": ["Douglas", "Raiza"]
+      "Ellen|61982203945": ["Éllen", "Nélio"]
+      "Gabriela|61993132405": ["Gabriela"]
+
+    };
+
+    let selectedGuests = {};
+    let currentRep = "";
+    let currentPhone = "";
+
+    // ✅ BOTÃO ENTRAR COM BLOQUEIO E MENSAGEM
+    function login() {
+      const name = document.getElementById("name").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const key = `${name}|${phone}`;
+      const loginButton = document.querySelector("#loginBox button");
+
+      loginButton.disabled = true;
+      loginButton.classList.add("disabled");
+      loginButton.textContent = "Verificando...";
+
+      let msg = document.getElementById("loginMessage");
+      if (!msg) {
+        msg = document.createElement("p");
+        msg.id = "loginMessage";
+        msg.style.color = "#555";
+        msg.style.marginTop = "10px";
+        document.getElementById("loginBox").appendChild(msg);
+      }
+      msg.textContent = "Verificando dados...";
+
+      setTimeout(() => {
+        if (families[key]) {
+          currentRep = name;
+          currentPhone = phone;
+          document.getElementById("loginBox").style.display = "none";
+          document.getElementById("familyBox").style.display = "block";
+          loadGuests(families[key]);
+        } else {
+          msg.textContent = "❌ Nome ou telefone não encontrados. Tente novamente.";
+          loginButton.disabled = false;
+          loginButton.classList.remove("disabled");
+          loginButton.textContent = "Entrar";
+        }
+      }, 1000);
+    }
+
+    function loadGuests(guests) {
+      const guestListDiv = document.getElementById("guestList");
+      guestListDiv.innerHTML = "";
+      guests.forEach(guest => {
+        selectedGuests[guest] = null;
+        const div = document.createElement("div");
+        div.classList.add("guest");
+        div.innerHTML = `
+          <span>${guest}</span>
+          <div>
+            <button class="yes" onclick="setResponse(this,'${guest}',true)">Sim</button>
+            <button class="no" onclick="setResponse(this,'${guest}',false)">Não</button>
+          </div>
+        `;
+        guestListDiv.appendChild(div);
+      });
+    }
+
+    // ✅ BOTÕES “SIM/NÃO” FICAM CINZA APÓS CLICAR
+    function setResponse(button, guest, response) {
+      selectedGuests[guest] = response;
+      const buttons = button.parentElement.querySelectorAll("button");
+      buttons.forEach(btn => {
+        btn.disabled = true;
+        btn.classList.add("disabled");
+      });
+      button.classList.remove("disabled");
+    }
+
+    // ✅ ENVIO + MENSAGEM DE AGUARDE
+    function submitConfirmation() {
+      const status = document.getElementById("statusMessage");
+
+      if (localStorage.getItem('confirmed')) {
+        status.textContent = "Você já confirmou sua presença 💛";
+        return;
+      }
+
+      status.textContent = "Enviando confirmação... aguarde o próximo passo 💛";
+
+      fetch(SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          representante: currentRep,
+          telefone: currentPhone,
+          respostas: selectedGuests
+        })
+      }).then(() => {
+        localStorage.setItem('confirmed', 'true');
+        status.textContent = "Presença confirmada com sucesso! 💛";
+      }).catch(err => {
+        status.textContent = "Erro ao enviar confirmação. Tente novamente.";
+        console.error(err);
+      });
+    }
+  </script>
+</body>
+</html>
