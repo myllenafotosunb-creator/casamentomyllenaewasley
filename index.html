@@ -8,69 +8,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    body {
-      font-family: 'Poppins', Arial, sans-serif;
-      text-align: center;
-      margin: 20px;
-      background: #f8f8f8;
-      font-size: 18px;
-    }
-
-    h1, h2 { font-weight: 700; }
-    p { font-weight: 400; }
-
+    body { font-family: 'Poppins', Arial, sans-serif; text-align: center; margin: 20px; background: #f8f8f8; font-size: 18px; }
+    h1, h2 { font-weight: 700; } p { font-weight: 400; }
     h1 { color: #8a2be2; }
-
-    .form-box, .family-box {
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      max-width: 95%;
-      margin: 20px auto;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-
-    .guest {
-      display: flex;
-      justify-content: space-between;
-      margin: 10px 0;
-    }
-
-    input[type="text"] {
-      width: 90%;
-      padding: 10px;
-      font-size: 16px;
-      margin-bottom: 10px;
-    }
-
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .yes { background: #4caf50; color: white; }
-    .no { background: #f44336; color: white; }
-    .confirm { background: #8a2be2; color: white; margin-top: 15px; }
-
-    .intro-box {
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      max-width: 95%;
-      margin: 0 auto 20px auto;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      font-size: 18px;
-    }
-
-    .intro-box h2 { color: #8a2be2; }
-    .heart.orange { color: yellow; }
-    .greeting { color: orange; }
-
+    .form-box, .family-box { background: #fff; padding: 20px; border-radius: 10px; max-width: 95%; margin: 20px auto; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    .guest { display: flex; justify-content: space-between; margin: 10px 0; }
+    input[type="text"] { width: 90%; padding: 10px; font-size: 16px; margin-bottom: 10px; }
+    button { padding: 10px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; }
+    .yes { background: #4caf50; color: white; } .no { background: #f44336; color: white; } .confirm { background: #8a2be2; color: white; margin-top: 15px; }
+    .intro-box { background: #fff; padding: 20px; border-radius: 10px; max-width: 95%; margin: 0 auto 20px auto; box-shadow: 0 2px 6px rgba(0,0,0,0.1); font-size: 18px; }
+    .intro-box h2 { color: #8a2be2; } .heart.orange { color: yellow; } .greeting { color: orange; }
     .disabled { opacity: 0.6; cursor: not-allowed; }
-
   </style>
 </head>
 <body>
@@ -122,7 +70,7 @@
       "Lucas|61982139004": ["Lucas", "Kelly"],
       "Valério|61992007754": ["Valério", "Bete", "Matheus", "Thomaz", "Kauã"],
       "Helena|61991919389": ["Helena", "Valdemir"],
-      "Samara|61996895534": ["Samara", "Jorge"]
+      "Samara|61996895534": ["Samara", "Jorge"],
       "Maria|61992860834": ["Fátima", "Raimundo", "Francisca", "Maria", "Stella"],
       "Ivânia|61998028741": ["Ivânia", "Cleidio", "Théo"],
       "Luciane|61998318576": ["Luciane", "Marcos", "Laura"],
@@ -155,19 +103,18 @@
       "Argemilha|61991518062": ["Argemilha", "Ronaldo", "Laís", "Pedro"],
       "Evelyn|61985410134": ["Evelyn", "Kelvin"],
       "Wesley|6198792488": ["Wesley"],
-      "Augeliane|61992306171": ["Augeliane", "Silva Filho", "Deiseane", "João, "Derik"],
+      "Augeliane|61992306171": ["Augeliane", "Silva Filho", "Deiseane", "João", "Derik"],
       "Argemiro|61982657020": ["Argemiro", "Socorro", "Célio", "Eduarda", "Jaqueline", "Sofia", "Jamiliane", "Walisson"],
       "Marileide|84996416808": ["Marileide", "Esther"],
       "Maria|61998762262": ["Maria do Socorro", "Marcos", "Carlos Eduardo", "Heloísa"],
       "Fagna|61981519070": ["Fagna", "Lara", "Cida", "Matheus"],
       "Leudo|61995975451": ["Leudo", "Geralda", "Raissa", "Thaynara"],
-      "Marcelo|61995554442": ["Marcelo"]
-      "Izabel|61996899627": ["Izabel", "Fábio"]
-      "Harry|61981918276": ["Harry", "Rejane"]
-      "Douglas|61982254299": ["Douglas", "Raiza"]
-      "Ellen|61982203945": ["Éllen", "Nélio"]
+      "Marcelo|61995554442": ["Marcelo"],
+      "Izabel|61996899627": ["Izabel", "Fábio"],
+      "Harry|61981918276": ["Harry", "Rejane"],
+      "Douglas|61982254299": ["Douglas", "Raiza"],
+      "Ellen|61982203945": ["Éllen", "Nélio"],
       "Gabriela|61993132405": ["Gabriela"]
-
     };
 
     let selectedGuests = {};
