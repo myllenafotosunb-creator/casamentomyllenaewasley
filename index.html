@@ -16,12 +16,8 @@
       font-size: 18px;
     }
 
-    h1, h2 {
-      font-weight: 700;
-    }
-    p {
-      font-weight: 400;
-    }
+    h1, h2 { font-weight: 700; }
+    p { font-weight: 400; }
 
     h1 { color: #8a2be2; }
 
@@ -68,17 +64,13 @@
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
       font-size: 18px;
     }
-    .intro-box h2 {
-      color: #8a2be2;
-    }
 
+    .intro-box h2 { color: #8a2be2; }
     .heart.orange { color: yellow; }
     .greeting { color: orange; }
 
-    .disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
+    .disabled { opacity: 0.6; cursor: not-allowed; }
+
   </style>
 </head>
 <body>
@@ -94,6 +86,7 @@
     <input type="text" id="name" placeholder="Primeiro nome"><br><br>
     <input type="text" id="phone" placeholder="Telefone, apenas números. Ex: 61998765432"><br><br>
     <button onclick="login()">Entrar</button>
+    <p id="loginMessage" style="color:#555; margin-top:10px;"></p>
   </div>
 
   <div class="family-box" id="familyBox" style="display:none;">
@@ -129,7 +122,7 @@
       "Lucas|61982139004": ["Lucas", "Kelly"],
       "Valério|61992007754": ["Valério", "Bete", "Matheus", "Thomaz", "Kauã"],
       "Helena|61991919389": ["Helena", "Valdemir"],
-      "Samara|61996895534": ["Samara", "Jorge"],
+      "Samara|61996895534": ["Samara", "Jorge"]
       "Maria|61992860834": ["Fátima", "Raimundo", "Francisca", "Maria", "Stella"],
       "Ivânia|61998028741": ["Ivânia", "Cleidio", "Théo"],
       "Luciane|61998318576": ["Luciane", "Marcos", "Laura"],
@@ -181,26 +174,17 @@
     let currentRep = "";
     let currentPhone = "";
 
-    // ✅ BOTÃO ENTRAR COM BLOQUEIO E MENSAGEM
     function login() {
       const name = document.getElementById("name").value.trim();
       const phone = document.getElementById("phone").value.trim();
       const key = `${name}|${phone}`;
       const loginButton = document.querySelector("#loginBox button");
+      const loginMsg = document.getElementById("loginMessage");
 
       loginButton.disabled = true;
       loginButton.classList.add("disabled");
       loginButton.textContent = "Verificando...";
-
-      let msg = document.getElementById("loginMessage");
-      if (!msg) {
-        msg = document.createElement("p");
-        msg.id = "loginMessage";
-        msg.style.color = "#555";
-        msg.style.marginTop = "10px";
-        document.getElementById("loginBox").appendChild(msg);
-      }
-      msg.textContent = "Verificando dados...";
+      loginMsg.textContent = "Verificando dados...";
 
       setTimeout(() => {
         if (families[key]) {
@@ -210,7 +194,7 @@
           document.getElementById("familyBox").style.display = "block";
           loadGuests(families[key]);
         } else {
-          msg.textContent = "❌ Nome ou telefone não encontrados. Tente novamente.";
+          loginMsg.textContent = "❌ Nome ou telefone não encontrados. Tente novamente.";
           loginButton.disabled = false;
           loginButton.classList.remove("disabled");
           loginButton.textContent = "Entrar";
@@ -236,7 +220,6 @@
       });
     }
 
-    // ✅ BOTÕES “SIM/NÃO” FICAM CINZA APÓS CLICAR
     function setResponse(button, guest, response) {
       selectedGuests[guest] = response;
       const buttons = button.parentElement.querySelectorAll("button");
@@ -244,10 +227,9 @@
         btn.disabled = true;
         btn.classList.add("disabled");
       });
-      button.classList.remove("disabled");
+      button.style.opacity = "1";
     }
 
-    // ✅ ENVIO + MENSAGEM DE AGUARDE
     function submitConfirmation() {
       const status = document.getElementById("statusMessage");
 
@@ -275,6 +257,7 @@
         console.error(err);
       });
     }
+
   </script>
 </body>
 </html>
