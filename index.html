@@ -4,28 +4,35 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Confirmação de Presença</title>
-
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
   <style>
     body { font-family: 'Poppins', Arial, sans-serif; text-align: center; margin: 20px; background: #f8f8f8; font-size: 18px; }
-    h1, h2 { font-weight: 700; } p { font-weight: 400; }
+    h1, h2 { font-weight: 700; }
+    p { font-weight: 400; }
     h1 { color: #8a2be2; }
-    .form-box, .family-box { background: #fff; padding: 20px; border-radius: 10px; max-width: 95%; margin: 20px auto; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    .form-box, .family-box {
+      background: #fff; padding: 20px; border-radius: 10px;
+      max-width: 95%; margin: 20px auto; box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
     .guest { display: flex; justify-content: space-between; margin: 10px 0; }
     input[type="text"] { width: 90%; padding: 10px; font-size: 16px; margin-bottom: 10px; }
     button { padding: 10px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; }
-    .yes { background: #4caf50; color: white; } .no { background: #f44336; color: white; } .confirm { background: #8a2be2; color: white; margin-top: 15px; }
-    .intro-box { background: #fff; padding: 20px; border-radius: 10px; max-width: 95%; margin: 0 auto 20px auto; box-shadow: 0 2px 6px rgba(0,0,0,0.1); font-size: 18px; }
-    .intro-box h2 { color: #8a2be2; } .heart.orange { color: yellow; } .greeting { color: orange; }
+    .yes { background: #4caf50; color: white; }
+    .no { background: #f44336; color: white; }
+    .confirm { background: #8a2be2; color: white; margin-top: 15px; }
+    .intro-box {
+      background: #fff; padding: 20px; border-radius: 10px;
+      max-width: 95%; margin: 0 auto 20px auto; box-shadow: 0 2px 6px rgba(0,0,0,0.1); font-size: 18px;
+    }
+    .intro-box h2 { color: #8a2be2; }
     .disabled { opacity: 0.6; cursor: not-allowed; }
   </style>
 </head>
 <body>
   <div class="intro-box">
-    <h2><span class="greeting">"Até aqui o Senhor nos sustentou" 1Sm 7,12</span> 💛</h2>
+    <h2><span class="greeting">"Até aqui o Senhor nos sustentou" 1Sm 7,12</span></h2>
     <p>Estamos muito felizes em convidar você para nosso casamento!</p>
-    <p><strong>Myllena 🧡 Wasley</strong></p>
+    <p><strong>Myllena e Wasley</strong></p>
     <p>Por favor, confirme sua presença abaixo:</p>
   </div>
 
@@ -40,7 +47,7 @@
   <div class="family-box" id="familyBox" style="display:none;">
     <h2>Confirme os convidados:</h2>
     <div id="guestList"></div>
-    <button class="confirm" onclick="submitConfirmation()">Confirmar Presença</button>
+    <button id="confirmBtn" class="confirm disabled" disabled>OK</button>
     <p id="statusMessage" style="margin-top:10px; color:#555;"></p>
   </div>
 
@@ -98,23 +105,28 @@
       "Maria|61991676159": ["Rita", "Marido"],
       "Will|61985942024": ["Will", "Marina"],
       "Gidelma|61991417788": ["Gidelma", "Lara", "Maria Luiza"],
-      "Welleson|61982729104": ["Welleson", "Kallyne", "Eloah"],
-      "Antônia|83996378210": ["Antônio", "Simone", "Maria das Dores", "José Odair", "Nivaldo"],
-      "Argemilha|61991518062": ["Argemilha", "Ronaldo", "Laís", "Pedro"],
+      "Welesson|61982729104": ["Welesson", "Kallyne", "Eloah"],
+      "Emanuelle|61993535972": ["Emanuelle"],
+      "Antônia|83996378210": ["Antônia", "Simone", "Maria das Dores", "José Odair", "Nivaldo"],
+      "Agemilha|61991518062": ["Agemilha", "Ronaldo", "Laís", "Pedro"],
       "Evelyn|61985410134": ["Evelyn", "Kelvin"],
       "Wesley|6198792488": ["Wesley"],
       "Augeliane|61992306171": ["Augeliane", "Silva Filho", "Deiseane", "João", "Derik"],
       "Argemiro|61982657020": ["Argemiro", "Socorro", "Célio", "Eduarda", "Jaqueline", "Sofia", "Jamiliane", "Walisson"],
       "Marileide|84996416808": ["Marileide", "Esther"],
       "Maria|61998762262": ["Maria do Socorro", "Marcos", "Carlos Eduardo", "Heloísa"],
-      "Fagna|61981519070": ["Fagna", "Lara", "Cida", "Matheus"],
-      "Leudo|61995975451": ["Leudo", "Geralda", "Raissa", "Thaynara"],
+      "Fagna|61981519070": ["Fagna", "Lara", "Cida"],
+      "Matheus|99985024146": ["Matheus"],
+      "Leudo|61995975451": ["Leudo", "Geralda", "Raissa", "Lorrane"],
       "Marcelo|61995554442": ["Marcelo"],
       "Izabel|61996899627": ["Izabel", "Fábio"],
       "Harry|61981918276": ["Harry", "Rejane"],
       "Douglas|61982254299": ["Douglas", "Raiza"],
       "Ellen|61982203945": ["Éllen", "Nélio"],
-      "Gabriela|61993132405": ["Gabriela"]
+      "Josélia|61991119738": ["Josélia"],
+      "Gisele|61985699351": ["Gisele", "Josafá", "Lavínia", "Helena"],
+      "Simone|61986069615": ["Simone", "Bela", "Madson"],
+      "Ana|61994023942": ["Ana Júlia", "Francisco"]
     };
 
     let selectedGuests = {};
@@ -141,7 +153,7 @@
           document.getElementById("familyBox").style.display = "block";
           loadGuests(families[key]);
         } else {
-          loginMsg.textContent = "❌ Nome ou telefone não encontrados. Tente novamente.";
+          loginMsg.textContent = "Nome ou telefone não encontrados. Tente novamente.";
           loginButton.disabled = false;
           loginButton.classList.remove("disabled");
           loginButton.textContent = "Entrar";
@@ -152,6 +164,7 @@
     function loadGuests(guests) {
       const guestListDiv = document.getElementById("guestList");
       guestListDiv.innerHTML = "";
+      selectedGuests = {};
       guests.forEach(guest => {
         selectedGuests[guest] = null;
         const div = document.createElement("div");
@@ -175,17 +188,24 @@
         btn.classList.add("disabled");
       });
       button.style.opacity = "1";
+
+      // Habilita o botão OK apenas quando todos tiverem respondido
+      const allAnswered = Object.values(selectedGuests).every(v => v !== null);
+      const confirmBtn = document.getElementById("confirmBtn");
+      if (allAnswered) {
+        confirmBtn.disabled = false;
+        confirmBtn.classList.remove("disabled");
+        confirmBtn.onclick = submitConfirmation;
+      }
     }
 
     function submitConfirmation() {
+      const confirmBtn = document.getElementById("confirmBtn");
       const status = document.getElementById("statusMessage");
 
-      if (localStorage.getItem('confirmed')) {
-        status.textContent = "Você já confirmou sua presença 💛";
-        return;
-      }
-
-      status.textContent = "Enviando confirmação... aguarde o próximo passo 💛";
+      confirmBtn.disabled = true;
+      confirmBtn.classList.add("disabled");
+      status.textContent = "Aguardando o próximo passo...";
 
       fetch(SCRIPT_URL, {
         method: "POST",
@@ -197,14 +217,12 @@
           respostas: selectedGuests
         })
       }).then(() => {
-        localStorage.setItem('confirmed', 'true');
-        status.textContent = "Presença confirmada com sucesso! 💛";
+        status.textContent = "Confirmação registrada! Aguardem o próximo passo.";
       }).catch(err => {
         status.textContent = "Erro ao enviar confirmação. Tente novamente.";
         console.error(err);
       });
     }
-
   </script>
 </body>
 </html>
